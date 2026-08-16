@@ -1,0 +1,42 @@
+[
+    {
+        "city": "Delft, Netherlands",
+        "num_nodes": 1285,
+        "num_edges_full": 824970,
+        "num_edges_spanner": 2554,
+        "pct_pruned": 99.6904,
+        "measured_max_stretch": 1.4,
+        "runtime_seconds": 631.91,
+        "status": "SUCCESS"
+    },
+    {
+        "city": "Eindhoven, Netherlands",
+        "num_nodes": 1332,
+        "num_edges_full": 886446,
+        "num_edges_spanner": 2610,
+        "pct_pruned": 99.7056,
+        "measured_max_stretch": 1.4,
+        "runtime_seconds": 680.17,
+        "status": "SUCCESS"
+    },
+    {
+        "city": "Leuven, Belgium",
+        "num_nodes": 886,
+        "num_edges_full": 392055,
+        "num_edges_spanner": 1703,
+        "pct_pruned": 99.5656,
+        "measured_max_stretch": 1.3998,
+        "runtime_seconds": 201.41,
+        "status": "SUCCESS"
+    },
+    {
+        "city": "Rome, Italy",
+        "num_nodes": 1129,
+        "num_edges_full": 636756,
+        "num_edges_spanner": 2239,
+        "pct_pruned": 99.6484,
+        "measured_max_stretch": 1.4,
+        "runtime_seconds": 425.55,
+        "status": "SUCCESS"
+    }
+]
