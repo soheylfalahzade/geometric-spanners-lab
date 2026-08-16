@@ -79,3 +79,4 @@ The synthetic baseline above uses randomly distributed points. To test whether t
 | Max (measured, not assumed) | 1.39997 |
 
 **Finding:** despite very different street topologies (canal-based Delft, planned-grid Eindhoven, medieval-organic Leuven, ancient-chaotic Rome), the stretch distribution is nearly identical across all four cities. Topology does not appear to be the dominant factor at this scale (800–1,300 nodes) — full verification code and distribution histograms are in `osm_experiments/`.
+![City Comparison](osm_experiments/city_comparison_distributions.png)
