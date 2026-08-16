@@ -56,3 +56,26 @@ $$d_H(u, v) > t \cdot \|p_u - p_v\|_2$$
 
 ## 📄 License
 This project is licensed under the MIT License.
+---
+
+## 🌍 Real-World Validation (OpenStreetMap Road Networks)
+
+The synthetic baseline above uses randomly distributed points. To test whether the same construction holds on real, structurally different urban topologies, the benchmark was extended to actual road networks (via OSMnx) for four cities:
+
+| City | Nodes | Full Graph Edges | Spanner Edges | % Pruned | Verified Max Stretch |
+|---|---|---|---|---|---|
+| Delft, NL | 1,285 | 824,970 | 2,554 | 99.69% | 1.39997 |
+| Eindhoven, NL | 1,332 | 886,446 | 2,610 | 99.71% | 1.39998 |
+| Leuven, BE | 886 | 392,055 | 1,703 | 99.57% | 1.39975 |
+| Rome, IT | 1,129 | 636,756 | 2,239 | 99.65% | 1.39997 |
+
+**Independently verified stretch distribution** (Delft, all 824,970 pairs — not just the algorithm's own target):
+
+| Statistic | Value |
+|---|---|
+| Mean | 1.102 |
+| Median | 1.098 |
+| 99th percentile | 1.237 |
+| Max (measured, not assumed) | 1.39997 |
+
+**Finding:** despite very different street topologies (canal-based Delft, planned-grid Eindhoven, medieval-organic Leuven, ancient-chaotic Rome), the stretch distribution is nearly identical across all four cities. Topology does not appear to be the dominant factor at this scale (800–1,300 nodes) — full verification code and distribution histograms are in `osm_experiments/`.
