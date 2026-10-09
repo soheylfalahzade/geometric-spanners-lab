@@ -40,6 +40,34 @@ $$d_H(u, v) > t \cdot \|p_u - p_v\|_2$$
 
 ---
 
+## Independent Verification
+
+`verify_independent.py` is deliberately separate from the pipeline. It re-derives the headline numbers with its own code path (heap-based Dijkstra for construction, scipy all-pairs shortest paths for stretch) and then compares them with the README and with the pipeline's own output: edge counts (990 / 77 / 92.22%), exhaustive maximum stretch over all pairs, connectivity, and edge-set equality with `greedy_spanner.py`. It also checks that `osm_experiments/results.json` is internally consistent. A self-test with analytically known controls runs first (a planted gap with stretch exactly 3.0, a disconnected graph that must be reported as infinite, and a complete graph with stretch 1.0). It needs no network access.
+
+    python verify_independent.py
+
+**Scope note for the OpenStreetMap experiments.** `osm_experiments/` uses only the node coordinates of each road network (Euclidean metric). Road connectivity and one-way restrictions are ignored, and "% pruned" is measured against the complete graph over those nodes, not against the road graph's own edges. Road-aware, directed constructions are addressed in the sibling repositories listed under Research Program.
+
+## Research Program
+
+This repository is one component of a connected research program on emergency-aware urban network control. The four repositories share a problem family, not code: each is self-contained and makes claims only within its own tested scope.
+
+| Repository | Setting | Role in the program | Type of guarantee |
+| --- | --- | --- | --- |
+| **[`geometric-spanners-lab`](https://github.com/soheylfalahzade/geometric-spanners-lab) (this repository)** | Euclidean point sets, undirected | Classical greedy t-spanner baseline | Exact by construction; independently re-derived by `verify_independent.py` |
+| [`Research_Geometric_ML_Optimization`](https://github.com/soheylfalahzade/Research_Geometric_ML_Optimization) | Directed OpenStreetMap road graphs | Same spanner problem, with learned (GNN + fuzzy) edge pruning for speed | Per-edge local repair guarantee; global stretch validated empirically by Monte Carlo sampling (small nonzero violation rate in one city, disclosed in that repository) |
+| [`delay-bounded-spanner-networks`](https://github.com/soheylfalahzade/delay-bounded-spanner-networks) | Directed road graphs with hourly speed profiles | Same problem under a time-varying delay constraint | Certified: an edge-wise certificate implies the all-pairs, all-hours bound (Theorem 1); congestion model is parametric, not fitted to telemetry |
+| [`anti-gridlock-signal-control`](https://github.com/soheylfalahzade/anti-gridlock-signal-control) | Single signalized intersection (SUMO) | Local control layer beneath a future network layer | Empirical (10 paired seeds); no closed-loop stability proof |
+
+**How the pieces fit.** The three spanner repositories form one line of work on sparse backbones of road networks: a classical greedy baseline, a machine-learning-accelerated variant on directed road graphs, and a variant that certifies a delay bound at every hour of the day. The signal-control repository is the local control layer that a network-level layer would sit above.
+
+**Status.** Integration of the local control layer with the network layer is planned and has not been demonstrated. Principal open items per repository:
+
+- `geometric-spanners-lab`: the OpenStreetMap experiments use node coordinates only (Euclidean metric), not road connectivity.
+- `Research_Geometric_ML_Optimization`: efficiency does not transfer to Tokyo scale (0.09% of edges pruned), and the ablation study is not yet in the paper.
+- `delay-bounded-spanner-networks`: the congestion field is parametric, not fitted to real traffic telemetry.
+- `anti-gridlock-signal-control`: fuzzy membership functions are hand-set, only one intersection is tested, and closed-loop stability is open.
+
 ## 🚀 Quickstart & Reproducibility
 
     # 1. Clone the repository
