@@ -64,7 +64,7 @@ This repository is one component of a connected research program on emergency-aw
 **Status.** Integration of the local control layer with the network layer is planned and has not been demonstrated. Principal open items per repository:
 
 - `geometric-spanners-lab`: the OpenStreetMap experiments use node coordinates only (Euclidean metric), not road connectivity.
-- `Research_Geometric_ML_Optimization`: efficiency does not transfer to Tokyo scale (0.09% of edges pruned), and the ablation study is not yet in the paper.
+- `Research_Geometric_ML_Optimization`: efficiency does not transfer to Tokyo scale (0.09% of edges pruned), and the ablation study has not yet been re-run on all four cities with the final pipeline.
 - `delay-bounded-spanner-networks`: the congestion field is parametric, not fitted to real traffic telemetry.
 - `anti-gridlock-signal-control`: fuzzy membership functions are hand-set, only one intersection is tested, and closed-loop stability is open.
 
