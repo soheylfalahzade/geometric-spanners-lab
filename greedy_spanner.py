@@ -51,7 +51,7 @@ def build_greedy_t_spanner(points: dict, t: float = 1.4) -> tuple[nx.Graph, floa
     return H, elapsed_time
 
 def evaluate_and_export_figure(points: dict, H: nx.Graph, t: float = 1.4, output_file: str = "spanner_comparison.png"):
-    """Evaluates spanner sparsity metrics and exports a publication-grade comparison figure."""
+    """Evaluates spanner sparsity metrics and exports a high-resolution comparison figure."""
     n = len(points)
     total_complete_edges = n * (n - 1) // 2
     spanner_edges = H.number_of_edges()
