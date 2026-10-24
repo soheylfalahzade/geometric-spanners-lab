@@ -8,7 +8,7 @@ from scipy.spatial import distance_matrix
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 
-# وارد کردن الگوریتم اصلی شما
+# Import the greedy construction
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from greedy_spanner import build_greedy_t_spanner
 
@@ -26,7 +26,7 @@ def verify_city(city_name):
     print(f"VERIFYING STRETCH DISTRIBUTION: {city_name}")
     print("=" * 65)
     
-    # 1. دانلود نقشه
+    # 1. Download the map
     print("[1/3] Downloading road network (1500m)...")
     G = ox.graph_from_address(city_name, dist=RADIUS_METERS, network_type='drive')
     G_proj = ox.project_graph(G)
@@ -35,11 +35,11 @@ def verify_city(city_name):
     n = len(points_dict)
     coords = np.array([points_dict[i] for i in range(n)])
     
-    # 2. ساخت اسپانر
+    # 2. Build the spanner
     print(f"[2/3] Constructing Greedy Spanner for {n} nodes...")
     H, runtime = build_greedy_t_spanner(points_dict, t=T_VALUE)
     
-    # 3. محاسبه ماتریس فاصله‌ها و نسبت کشیدگی
+    # 3. Compute the distance matrices and the stretch ratios
     print("[3/3] Calculating full distribution across all pairs...")
     dist_mat = distance_matrix(coords, coords)
     
@@ -58,7 +58,7 @@ def verify_city(city_name):
     euclidean_dists = dist_mat[upper_tri]
     stretch_ratios = spanner_dists / euclidean_dists
     
-    # آماره‌ها
+    # Statistics
     metrics = {
         "city": city_name,
         "num_nodes": n,
@@ -73,7 +73,7 @@ def verify_city(city_name):
         "runtime_seconds": round(runtime, 2)
     }
     
-    # چاپ نتایج در ترمینال
+    # Print the results to the terminal
     print("-" * 65)
     print(f"Total Evaluated Pairs: {metrics['total_pairs']:,}")
     print(f"Min Stretch:           {metrics['min']:.6f}")
@@ -86,7 +86,7 @@ def verify_city(city_name):
     print(f"Violates t={T_VALUE}?        {'YES' if metrics['raw_max'] > T_VALUE + 1e-7 else 'NO'}")
     print("-" * 65)
     
-    # رسم هیستوگرام
+    # Plot the histogram
     safe_name = city_name.split(',')[0].strip().lower().replace(" ", "_")
     plt.figure(figsize=(9, 4.5), dpi=300)
     plt.hist(stretch_ratios, bins=100, color='#1e40af', edgecolor='black', alpha=0.7)

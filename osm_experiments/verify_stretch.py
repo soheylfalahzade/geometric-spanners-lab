@@ -7,7 +7,7 @@ from scipy.spatial import distance_matrix
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 
-# وارد کردن الگوریتم شما
+# Import the greedy construction
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from greedy_spanner import build_greedy_t_spanner
 
@@ -16,7 +16,7 @@ def run_independent_validation():
     print("INDEPENDENT STRETCH FACTOR VERIFICATION (Delft, Netherlands)")
     print("=" * 60)
 
-    # 1. بارگذاری نقشه دلفت (شعاع 1500 متر)
+    # 1. 1. Load the Delft map (1500 m radius)
     print("[1/3] Downloading Delft network (1500m)...")
     G = ox.graph_from_address("Delft, Netherlands", dist=1500, network_type='drive')
     G_proj = ox.project_graph(G)
@@ -25,15 +25,15 @@ def run_independent_validation():
     n = len(points_dict)
     coords = np.array([points_dict[i] for i in range(n)])
     
-    # 2. ساخت اسپانر با t = 1.4
+    # 2. 2. Build the spanner with t = 1.4
     print(f"[2/3] Building Greedy Spanner for {n} nodes...")
     H, runtime = build_greedy_t_spanner(points_dict, t=1.4)
     
-    # 3. محاسبه ماتریس کشیدگی واقعی برای تمام جفت‌ها
+    # 3. 3. Compute the true stretch matrix for all pairs
     print("[3/3] Computing All-Pairs Shortest Paths and Stretch Distribution...")
     dist_mat = distance_matrix(coords, coords)
     
-    # ماتریس مجاورت اسپانر
+    # Spanner adjacency matrix
     row, col, data = [], [], []
     for u, v, d in H.edges(data=True):
         w = d['weight']
@@ -44,14 +44,14 @@ def run_independent_validation():
     
     apsp = shortest_path(csgraph=spanner_adj, directed=False)
     
-    # استخراج فقط مثلث بالایی ماتریس (همه جفت‌های u < v یکتا)
+    # Keep only the upper triangle of the matrix (every pair u < v exactly once)
     upper_tri_indices = np.triu_indices(n, k=1)
     spanner_dists = apsp[upper_tri_indices]
     euclidean_dists = dist_mat[upper_tri_indices]
     
     stretch_ratios = spanner_dists / euclidean_dists
     
-    # 4. محاسبه آماره‌های دقیق توزیع (بدون هیچ‌گونه گرد کردن فیک)
+    # 4. 4. Compute exact distribution statistics (no rounding applied)
     min_val = np.min(stretch_ratios)
     mean_val = np.mean(stretch_ratios)
     median_val = np.median(stretch_ratios)
@@ -75,7 +75,7 @@ def run_independent_validation():
     print(f"Violates t=1.4?                {'YES (Violation!)' if raw_max_val > 1.4 + 1e-7 else 'NO (Strictly holds)'}")
     print("=" * 60)
     
-    # 5. رسم هیستوگرام توزیع
+    # 5. 5. Plot the distribution histogram
     plt.figure(figsize=(10, 5), dpi=300)
     plt.hist(stretch_ratios, bins=100, color='#1e40af', edgecolor='black', alpha=0.7)
     plt.axvline(1.4, color='red', linestyle='--', linewidth=1.5, label='Theoretical Bound (t=1.4)')

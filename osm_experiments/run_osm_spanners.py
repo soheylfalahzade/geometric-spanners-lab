@@ -11,7 +11,7 @@ from scipy.spatial import distance_matrix
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 
-# اضافه کردن پوشه والد به مسیر سیستم برای دسترسی به فایل greedy_spanner.py شما
+# Add the parent folder to the path so greedy_spanner.py can be imported
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from greedy_spanner import build_greedy_t_spanner
 
