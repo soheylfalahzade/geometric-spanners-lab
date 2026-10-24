@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "geometric-spanners-lab: a reproducible benchmark of the greedy t-spanner"
+type: software
+authors:
+  - family-names: "Fallahzadeh"
+    given-names: "Soheil"
+repository-code: "https://github.com/soheylfalahzade/geometric-spanners-lab"
+license: MIT
+keywords:
+  - geometric spanners
+  - greedy algorithm
+  - road networks
