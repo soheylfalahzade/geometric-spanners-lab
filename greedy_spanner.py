@@ -1,6 +1,6 @@
 """
 Geometric Spanners Lab: Greedy t-Spanner Construction & Visualization
-Author: Soheil Fallahzadeh
+Author: Soheil Falahzade
 """
 
 import numpy as np
