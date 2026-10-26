@@ -4,7 +4,7 @@ title: "geometric-spanners-lab: a reproducible benchmark of the greedy t-spanner
 type: software
 authors:
   - family-names: "Fallahzadeh"
-    given-names: "Soheyl"
+    given-names: "Soheil"
 repository-code: "https://github.com/soheylfalahzade/geometric-spanners-lab"
 license: MIT
 keywords:
