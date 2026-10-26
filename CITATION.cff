@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 title: "geometric-spanners-lab: a reproducible benchmark of the greedy t-spanner"
 type: software
 authors:
-  - family-names: "Fallahzadeh"
+  - family-names: "Falahzade"
     given-names: "Soheil"
 repository-code: "https://github.com/soheylfalahzade/geometric-spanners-lab"
 license: MIT
